@@ -98,7 +98,101 @@ def loginAdmin():
 
 
 # END Modulo Administration
-# Modulo Logout Administrador
+# Modulo Login Ayudante (Registro de Caso)
+@app.route('/login_ayudante', methods=['GET','POST'])
+def loginAyudante():
+    if request.method == 'POST':
+        # Get form Fields
+        username = request.form['username']
+        password = request.form['password']
+
+        cur = mysql.connection.cursor()
+
+        # Get user by username
+        user_db = cur.execute('SELECT * FROM `Modulo administración` WHERE Usuario = %s AND Rol="1"',
+        [username])
+
+       # Compare Passwords
+        if user_db > 0:
+            user_db = cur.fetchone()
+            user_pass = user_db['Contraseña']
+
+            if password == user_pass:
+                session['ayudante_logged_in'] =  True
+                session['ayudante_username'] = username
+
+                return redirect(url_for('mainAyudante'))
+            else:
+                flash('Contraseña Incorrecta, intente nuevamente.','error')
+        else:
+            flash('Este ayudante no existe.','error')
+    return render_template("login-ayudante.html")
+
+# Check if Ayudante is logged-in
+def ayudante_is_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'ayudante_logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('No estás autorizado, Ingrese a su cuenta', 'error')
+            return redirect(url_for('loginAyudante'))
+    return wrap
+
+# Modulo Inicio de Ayudante (Donde se le muestran las 2 opciones)
+@app.route('/main_ayudante')
+@ayudante_is_logged_in
+def mainAyudante():
+    return render_template('main-ayudante.html')
+
+
+# Modulo Login Médico (Registro de Caso)
+@app.route('/login_medico', methods=['GET','POST'])
+def loginMedico():
+    if request.method == 'POST':
+        # Get form Fields
+        username = request.form['username']
+        password = request.form['password']
+
+        cur = mysql.connection.cursor()
+
+        # Get medico by username
+        user_db = cur.execute('SELECT * FROM `Modulo administración` WHERE Usuario = %s AND Rol="2"',
+        [username])
+
+       # Compare Passwords
+        if user_db > 0:
+            user_db = cur.fetchone()
+            user_pass = user_db['Contraseña']
+
+            if password == user_pass:
+                session['medico_logged_in'] =  True
+                session['medico_username'] = username
+
+                return redirect(url_for('mainMedico'))
+            else:
+                flash('Contraseña Incorrecta, intente nuevamente.','error')
+        else:
+            flash('Este médico no existe.','error')
+    return render_template("login-medico.html")
+
+# Check if Médico is logged-in
+def medico_is_logged_in(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'medico_logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('No estás autorizado, Ingrese a su cuenta', 'error')
+            return redirect(url_for('loginMedico'))
+    return wrap
+
+# Modulo Inicio de Medico (Donde se le muestran las 2 opciones)
+@app.route('/main_medico')
+@medico_is_logged_in
+def mainMedico():
+    return render_template('main-medico.html')
+# Modulo Logout 
 @app.route('/logout')
 def logout():
     session.clear()

@@ -29,7 +29,8 @@
             </a>
             <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
               <li><a class="dropdown-item" href="{{url_for('loginAdmin')}}">Administrador</a></li>
-              <li><a class="dropdown-item" href="/">Usuario</a></li>
+              <li><a class="dropdown-item" href="{{url_for('loginAyudante')}}">Ayudante</a></li>
+              <li><a class="dropdown-item" href="{{url_for('loginMedico')}}">Médico</a></li>
               <li><a class="dropdown-item" href="{{url_for('logout')}}"></span>Cerrar Sesión</a></li> 
             </ul>
           </div>

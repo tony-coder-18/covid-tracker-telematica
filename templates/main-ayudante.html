@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="row">
+    <h1>Bienvenido Ayudante</h1>
+</div>
+
+<div class="row">
+    <h2>¿Qué desea hacer?</h2>
+</div>
+
+<div class="row">
+    <a href="{{url_for('registro')}}" class="btn btn-primary">
+        Registrar Nuevo Caso
+    </a>
+    <a href="#" class="btn btn-secondary">
+        Gestionar Caso
+    </a>
+</div>
+
+{% endblock %}

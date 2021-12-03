@@ -334,7 +334,7 @@ def grafica1(p):
         plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
         plt.axis("equal")
         #Grafica-pie2
-        Estado = [10,5,4]#Valores de la base de datos
+        Estado = [1,5,4]#Valores de la base de datos
         nombres = ["En tratamiento en casa","en UCI","Fallecidos"]
         plt.subplot(223)
         plt.pie(Estado, labels=nombres, autopct="%0.1f %%")

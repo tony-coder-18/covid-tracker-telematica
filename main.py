@@ -240,7 +240,7 @@ def registroSuccess():
 #Modulo Visualización
 @app.route('/Visual')
 def Visual():
-    return render_template('mapa2.html')
+    return render_template('Mapa.html')
 # END Modulo Visualización
 
 # Modulo Busqueda

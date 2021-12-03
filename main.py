@@ -303,7 +303,7 @@ r=1
 def grafica2(r):
     if r>=1:
         Estado = [10,3,20] #Colocar los valores de la base de datos
-        nombres = [4,10,4]
+        nombres = ["Infectados","Muertes","Curados"]
         plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
         plt.axis("equal")
         plt.savefig('C:/Users/PC/Documents/Universidad/Covid/covid-tracker-telematica/static/img/totalpie.png')

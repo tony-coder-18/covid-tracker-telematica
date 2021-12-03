@@ -8,6 +8,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from flask_bcrypt import Bcrypt
 import requests
+from matplotlib import pyplot as plt
+import numpy as np
 # Load Enviroment Variables from .env file
 load_dotenv(find_dotenv())
 
@@ -276,6 +278,36 @@ def getGeoCoord(address):
         else:
             return  
 getGeoCoord(address)
+
+#Grafica de XY
+
+p=0
+def grafica1(p):
+    if p>=1:
+        dia=[1,2,3,4]
+        numcasos=[1,4,10,12]
+        muerte=[1,2,2,7]
+
+        plt.title("Número de casos vs Número de Muertes",fontsize=15)
+        plt.xlabel("Días",fontsize=13)
+        plt.ylabel("Casos",fontsize=13)
+        plt.plot(dia,numcasos,color="green",markersize=10,marker="p",label="Número de casos")
+        plt.plot(dia,muerte,color="red", markersize=10,marker="p",label="Número de muertes")
+        plt.legend()
+        plt.savefig('C:/Users/PC/Documents/Universidad/Covid/covid-tracker-telematica/static/img/XY.jpg')#aqui añade el link de la carpeta en donde quieres se guarden las imagenes de lso graficos automaticamente  
+grafica1(p)
+
+#Grafica pie1
+#Crear en la base de datos los totales y que se cuenten
+r=1
+def grafica2(r):
+    if r>=1:
+        Estado = [10,3,20] #Colocar los valores de la base de datos
+        nombres = [4,10,4]
+        plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
+        plt.axis("equal")
+        plt.savefig('C:/Users/PC/Documents/Universidad/Covid/covid-tracker-telematica/static/img/totalpie.png')
+grafica2(r)
 """@app.route('/edit/<id>', methods = ['POST', 'GET'])
 def get_contact(id):
     cur = mysql.connection.cursor()

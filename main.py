@@ -2,9 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_mysqldb import MySQL
 import os, pymysql
 from dotenv import load_dotenv, find_dotenv
+from requests.exceptions import RequestsWarning
+from requests.models import LocationParseError
 from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from flask_bcrypt import Bcrypt
+import requests
 # Load Enviroment Variables from .env file
 load_dotenv(find_dotenv())
 
@@ -282,6 +285,29 @@ def Login():
     return render_template('Login.html')
 #End Log in
 
+#Request-map(residencia)
+API_KEY='AIzaSyApWerbv2WQJWG9cjo1n4c8Hy6PSFxU5oA'
+address = 'carrera 28 #22-53 malambo'
+def getGeoCoord(address):
+        params= {
+            'key': API_KEY,
+            'address' : address.replace(' ','+') #Direccion de residencia(base de datos)
+        }
+
+        base_url = 'https://maps.googleapis.com/maps/api/geocode/json?'
+
+        response = requests.get(base_url, params=params).json()
+        response.keys()
+        print (response['status'])
+        if response['status'] == 'OK':
+            geometry = response['results'][0]['geometry']
+            lat = geometry['location']['lat']
+            lon = geometry['location']['lng']
+            print (lat, lon)
+            return (lat,lon)
+        else:
+            return  
+getGeoCoord(address)
 """@app.route('/edit/<id>', methods = ['POST', 'GET'])
 def get_contact(id):
     cur = mysql.connection.cursor()

@@ -281,7 +281,7 @@ getGeoCoord(address)
 
 #Grafica de XY
 
-p=0
+p=1
 def grafica1(p):
     if p>=1:
         dia=[1,2,3,4]
@@ -291,23 +291,33 @@ def grafica1(p):
         plt.title("Número de casos vs Número de Muertes",fontsize=15)
         plt.xlabel("Días",fontsize=13)
         plt.ylabel("Casos",fontsize=13)
+        plt.subplot(221)
         plt.plot(dia,numcasos,color="green",markersize=10,marker="p",label="Número de casos")
         plt.plot(dia,muerte,color="red", markersize=10,marker="p",label="Número de muertes")
         plt.legend()
-        plt.savefig('C:/Users/PC/Documents/Universidad/Covid/covid-tracker-telematica/static/img/XY.jpg')#aqui añade el link de la carpeta en donde quieres se guarden las imagenes de lso graficos automaticamente  
-grafica1(p)
-
-#Grafica pie1
-#Crear en la base de datos los totales y que se cuenten
-r=1
-def grafica2(r):
-    if r>=1:
+        #Grafica-pie1
         Estado = [10,3,20] #Colocar los valores de la base de datos
         nombres = ["Infectados","Muertes","Curados"]
+        plt.subplot(222)
         plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
         plt.axis("equal")
-        plt.savefig('C:/Users/PC/Documents/Universidad/Covid/covid-tracker-telematica/static/img/totalpie.png')
-grafica2(r)
+        #Grafica-pie2
+        Estado = [10,5,4]#Valores de la base de datos
+        nombres = ["En tratamiento en casa","en UCI","Fallecidos"]
+        plt.subplot(223)
+        plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
+        plt.axis("equal")
+        #Grafica-pie3
+        Estado = [10, 2]#valores 
+        nombres = ["Valores positivos","valores negativos"]
+        plt.subplot(224)
+        plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
+        plt.axis("equal")
+        plt.savefig('C:/Users/PC/Documents/Universidad/Covid/covid-tracker-telematica/static/img/Graficas.png')
+        plt.show()
+grafica1(p)
+#Grafica pie1
+#Crear en la base de datos los totales y que se cuenten
 """@app.route('/edit/<id>', methods = ['POST', 'GET'])
 def get_contact(id):
     cur = mysql.connection.cursor()

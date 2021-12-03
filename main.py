@@ -238,7 +238,7 @@ def registroSuccess():
 #Modulo Visualización
 @app.route('/Visual')
 def Visual():
-    return render_template('Mapa.html')
+    return render_template('mapa2.html')
 # END Modulo Visualización
 
 # Modulo Busqueda
@@ -254,7 +254,7 @@ def Login():
 #End Log in
 
 #Request-map(residencia)
-API_KEY='AIzaSyApWerbv2WQJWG9cjo1n4c8Hy6PSFxU5oA'
+API_KEY='AIzaSyCCdzkkX62BwJVVZu5X4zs-b4OC1mgr6jU'
 address = 'carrera 28 #22-53 malambo'
 def getGeoCoord(address):
         params= {

@@ -378,9 +378,10 @@ def grafica1(p):
         plt.subplot(224)
         plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
         plt.axis("equal")
-        plt.savefig('C:/Users/PC/Documents/Universidad/Covid/covid-tracker-telematica/static/img/Graficas.png')
+        plt.savefig('static/img/Graficas.png')
+        plt.show()
 grafica1(p)
-#Grafica pie1
+
 #Crear en la base de datos los totales y que se cuenten
 """@app.route('/edit/<id>', methods = ['POST', 'GET'])
 def get_contact(id):

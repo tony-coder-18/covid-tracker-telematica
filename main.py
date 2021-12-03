@@ -379,7 +379,6 @@ def grafica1(p):
         plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
         plt.axis("equal")
         plt.savefig('static/img/Graficas.png')
-        plt.show()
 grafica1(p)
 
 #Crear en la base de datos los totales y que se cuenten

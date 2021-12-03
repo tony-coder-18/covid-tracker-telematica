@@ -8,6 +8,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 from flask_bcrypt import Bcrypt
 import requests
+from matplotlib import pyplot as plt
+import numpy as np
 # Load Enviroment Variables from .env file
 load_dotenv(find_dotenv())
 
@@ -319,7 +321,7 @@ def Login():
 #End Log in
 
 #Request-map(residencia)
-API_KEY='AIzaSyApWerbv2WQJWG9cjo1n4c8Hy6PSFxU5oA'
+API_KEY='AIzaSyCCdzkkX62BwJVVZu5X4zs-b4OC1mgr6jU'
 address = 'carrera 28 #22-53 malambo'
 def getGeoCoord(address):
         params= {
@@ -341,6 +343,45 @@ def getGeoCoord(address):
         else:
             return  
 getGeoCoord(address)
+
+#Grafica de XY
+
+p=1
+def grafica1(p):
+    if p>=1:
+        dia=[1,2,3,4]
+        numcasos=[1,4,10,12]
+        muerte=[1,2,2,7]
+
+        plt.title("Número de casos vs Número de Muertes",fontsize=15)
+        plt.xlabel("Días",fontsize=13)
+        plt.ylabel("Casos",fontsize=13)
+        plt.subplot(221)
+        plt.plot(dia,numcasos,color="green",markersize=10,marker="p",label="Número de casos")
+        plt.plot(dia,muerte,color="red", markersize=10,marker="p",label="Número de muertes")
+        plt.legend()
+        #Grafica-pie1
+        Estado = [10,3,20] #Colocar los valores de la base de datos
+        nombres = ["Infectados","Muertes","Curados"]
+        plt.subplot(222)
+        plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
+        plt.axis("equal")
+        #Grafica-pie2
+        Estado = [1,5,4]#Valores de la base de datos
+        nombres = ["En tratamiento en casa","en UCI","Fallecidos"]
+        plt.subplot(223)
+        plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
+        plt.axis("equal")
+        #Grafica-pie3
+        Estado = [2, 10]#valores de la base de datos
+        nombres = ["Valores positivos","valores negativos"]
+        plt.subplot(224)
+        plt.pie(Estado, labels=nombres, autopct="%0.1f %%")
+        plt.axis("equal")
+        plt.savefig('C:/Users/PC/Documents/Universidad/Covid/covid-tracker-telematica/static/img/Graficas.png')
+grafica1(p)
+#Grafica pie1
+#Crear en la base de datos los totales y que se cuenten
 """@app.route('/edit/<id>', methods = ['POST', 'GET'])
 def get_contact(id):
     cur = mysql.connection.cursor()

@@ -3,7 +3,7 @@
 
 <h2>Registrar Caso</h2>
 
-<form action="{{url_for('add_case')}}" method="POST" class="mb-4">
+<form id="form" name="form" action="{{url_for('add_case')}}" method="POST" class="mb-4">
     <div class="form-group">
       <label for="firstName">Nombre</label>
       <input id="firstName" type="text" class="form-control" name="firstName" placeholder="Pepito">
@@ -19,8 +19,8 @@
     <div class="form-group">
         <label for="Sexo">Sexo (F o M)</label>
         <select class="form-select" id="Sexo" name="Sexo">
-          <option selected value="Femenino">F</option>
-          <option value="Masculino">M</option>
+          <option selected value="1">F</option>
+          <option value="2">M</option>
         </select> 
     </div>
     <div class="form-group">
@@ -41,9 +41,19 @@
     <div class="form-group">
         <label for="ResultadoExamen">Resultado Examen (Positivo o Negativo)</label>
         <select class="form-select" id="ResultadoExamen" name="ResultadoExamen">
-          <option selected value="Positivo">Positivo</option>
-          <option value="Negativo">Negativo</option>
+          <option selected value="1">Positivo</option>
+          <option value="2">Negativo</option>
         </select> 
+    </div>
+    <div class="form-group">
+      <label for="ResultadoExamen">Estado</label>
+      <select form="form" class="form-select" id="estado" name="estado">
+        <option selected value="1">Tratamiento en Casa</option>
+        <option value="2">Tratamiento en Hospital</option>
+        <option value="3">UCI</option>
+        <option value="4">Curado</option>
+        <option value="5">Muerto</option>
+      </select> 
     </div>
     <div class="form-group">
         <label for="start">Fecha examen:</label>

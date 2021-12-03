@@ -220,11 +220,11 @@ def add_case():
         DireccionTrabajo = request.form['Direccion trabajo']
         ResultadoExamen = request.form['ResultadoExamen']
         FechaExamen = request.form['Fecha examen']
-
+        estado = request.form['estado']
         
         cur = mysql.connection.cursor()
-        cur.execute('INSERT INTO `Registro de Caso` (Nombres,Apellidos,Cédula,Sexo,Fecha de nacimiento,Dirección de residencia,Dirección Trabajo,Resultado Examen,Fecha examen) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)',
-        (name,lastName,idNumber,Sexo,FechaNacimiento,DireccionResidencia,DireccionTrabajo,ResultadoExamen,FechaExamen))
+        cur.execute('INSERT INTO `Registro de Caso` (Nombres,Apellidos,Cedula,Sexo,FechaDeNacimiento,DireccionDeResidencia,DireccionTrabajo,ResultadoExamen,FechaExamen,idEstado) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
+        (name,lastName,idNumber,Sexo,FechaNacimiento,DireccionResidencia,DireccionTrabajo,ResultadoExamen,FechaExamen,estado))
         mysql.connection.commit()
 
         return redirect(url_for('registroSuccess'))
@@ -267,6 +267,39 @@ def editar():
 
     return render_template('Gestion.html', casos=results)
 
+
+@app.route('/gestionar_medico',methods=['GET', 'POST'])
+@medico_is_logged_in
+def gestionar():
+    results = []
+    if request.method == 'POST':
+        search = request.form['searchInput']
+        searchType = request.form['searchType']
+        print(searchType)
+        
+        if searchType == 'byName':
+            cur = mysql.connection.cursor()
+            results = cur.execute('SELECT * FROM `Registro de Caso` WHERE Nombres LIKE "%' + search + '%"')
+        elif searchType == 'byCodigo':
+            cur = mysql.connection.cursor()
+            results = cur.execute('SELECT * FROM `Registro de Caso` WHERE CodigoDeCaso = '+ search)
+        else:
+            cur = mysql.connection.cursor()
+            results = cur.execute('SELECT * FROM `Registro de Caso` WHERE Cedula = '+ search)
+
+        results = cur.fetchall()
+
+        mysql.connection.commit()
+
+    return render_template('gestion-medico.html', casos=results)
+
+@app.route('/editar_caso_medico/<id>',methods=['GET', 'POST'])
+@medico_is_logged_in
+def getCasoMedico(id):
+    cur = mysql.connection.cursor()
+    results = cur.execute('SELECT * FROM `Registro de Caso` WHERE CodigoDeCaso = '+id)
+    results = cur.fetchone()
+    return render_template('edit-caso-medico.html', caso = results)
 
 # UPDATE `covidtelematica`.`Registro de Caso` SET `idEstado` = '1' WHERE (`CodigoDeCaso` = '6');
 @app.route('/editar_caso/<id>',methods=['GET', 'POST'])

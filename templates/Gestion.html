@@ -10,15 +10,46 @@
 
 {% block body %}
 
+{%- for la in lala %}
+ 
+    <div>{{ la.Apellidos }}</div>
 
+{% endfor %}
 
 <div>
 
     <div class="icotitulo">
-
-        Gestion de Pacientes
-
+        <h1>Gestion de Pacientes</h1>
     </div>
+</div>
+<div>
+    <form action="{{url_for('editar')}}" method="POST" class="mb-4">
+        <div class="form-group">
+            <label for="username">Buscar Caso</label>
+            <input id="searchInput" type="text" class="form-control" name="searchInput" >
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="searchType" value="byCodigo" id="searchType1">
+            <label class="form-check-label" for="searchType1">
+                Por ID de Caso
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="searchType" value="byName" id="searchType2" >
+            <label class="form-check-label" for="searchType2">
+                Por Nombre
+            </label>
+        </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="searchType" value="byCedula" id="searchType3" >
+            <label class="form-check-label" for="searchType3">
+                Por Cédula de paciente
+            </label>
+          </div>
+        <button type="submit" class="btn btn-primary btn-block">
+          Buscar
+        </button>
+    </form>
 </div>
 <div class="modal" tabindex="-1">
     <div class="modal-dialog">
@@ -49,7 +80,30 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        {%- for caso in casos %}
+            <tr>
+                <th scope="row">{{caso.CodigoDeCaso}}</th>
+                <td>{{caso.Nombres}}</td>
+                <td>{{caso.Apellidos}}</td>
+                <td>{{caso.Cedula}}</td>
+                <td>{{caso.idEstado}}</td>
+                <td>
+                    <div>
+                        <!-- Button trigger modal -->
+                        <a type="button" href="/editar_caso/{{caso.CodigoDeCaso}}" >
+                        Actualizar Estado
+                        </a>
+                        <button type="button">
+                            Historial de Estados
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
+        {% endfor %}
+
+        <!-- <tr>
+
             <th scope="row">1</th>
             <td>Jaime Danilo</td>
             <td>Vélez Recinos</td>
@@ -58,7 +112,7 @@
             <td>
                 <div>
                     <!-- Button trigger modal -->
-                    <button type="button"  data-bs-toggle="modal" data-bs-target="#Modal">
+                    <!-- <button type="button"  data-bs-toggle="modal" data-bs-target="#Modal">
                        Actualizar Estado
                     </button>
                     <button type="button">
@@ -66,7 +120,7 @@
                      </button>
                 </div>
             </td>
-        </tr>
+        </tr>  -->
     </tbody>
 </table>
 <!-- Modal -->

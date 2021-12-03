@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<form action="{{url_for('add_case')}}" method="POST" class="mb-4">
+    <div class="form-group">
+      <label for="firstName">Nombre</label>
+      <input id="firstName" type="text" class="form-control" name="firstName" value="{{caso.Nombres}}">
+    </div>
+    <div class="form-group">
+      <label for="lastName">Apellido</label>
+      <input id="lastName" type="text" class="form-control" name="lastName" value="{{caso.Apellidos}}">
+    </div>
+    <div class="form-group">
+        <label for="idNumber">Cédula</label>
+        <input id="idNumber" type="number" class="form-control" name="idNumber" value="{{caso.Cedula}}">
+    </div>
+    <!-- <div class="form-group">
+        <label for="Sexo">Sexo (F o M)</label>
+        <select class="form-select" id="Sexo" name="Sexo">
+          <option selected value="Femenino">F</option>
+          <option value="Masculino">M</option>
+        </select> 
+    </div> -->
+    <!-- <div class="form-group">
+        <label for="start">Fecha de nacimiento:</label>
+        <input type="date" id="start" name="Fecha de nacimiento"
+        value="2000-07-22"
+        min="1921-01-01" max="2021-11-24">
+       </select> 
+    </div> -->
+    <div class="form-group">
+      <label for="adress">Direccion de residencia</label>
+      <input id="adress" type="text" class="form-control" name="Direccion de residencia" value="{{caso.DireccionDeResidencia}}">
+    </div>
+    <div class="form-group">
+      <label for="adress1">Direccion trabajo</label>
+      <input id="adress1" type="text" class="form-control" name="Direccion trabajo" value="{{caso.DireccionTrabajo}}">
+    </div>
+    <!-- <div class="form-group">
+        <label for="ResultadoExamen">Resultado Examen (Positivo o Negativo)</label>
+        <select class="form-select" id="ResultadoExamen" name="ResultadoExamen">
+          <option selected value="Positivo">Positivo</option>
+          <option value="Negativo">Negativo</option>
+        </select> 
+    </div> -->
+    <div class="form-group">
+        <label for="start">Fecha examen:</label>
+        <input type="date" id="start1" name="Fecha examen"
+        value="{{caso.FechaExamen}}"
+        min="2020-01-01" max="2021-11-30">
+      </select> 
+    </div>
+
+    <label for="start">Fecha examen:</label>
+
+
+    <select class="form-select" id="estado" name="estado" >
+        <option value="1">Tratamiento en Casa</option>
+        <option value="2">Tratamiento en Hospital</option>
+        <option value="3">UCI</option>
+        <option value="4">Curado</option>
+        <option value="5">Muerto</option>
+    </select>
+
+    <a href="{{url_for('PagiP')}}" class="btn btn-secondary btn-block">
+        Volver al Login Inicial
+    </a>
+
+    <!-- <div class="form-check">
+        <input class="form-check-input" type="radio" name="searchType" value="byCodigo" id="searchType1">
+        <label class="form-check-label" for="searchType1">
+            Tratamiento en Casa
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="searchType" value="byName" id="searchType2" >
+        <label class="form-check-label" for="searchType2">
+            Tratamiento en Hospital
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="searchType" value="byName" id="searchType2" >
+        <label class="form-check-label" for="searchType2">
+            UCI
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="searchType" value="byName" id="searchType2" >
+        <label class="form-check-label" for="searchType2">
+            Curado
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="searchType" value="byName" id="searchType2" >
+        <label class="form-check-label" for="searchType2">
+            Muerto
+        </label>
+    </div> -->
+
+</form>
+
+<script>
+
+    console.log("ndjfnj");
+    document.querySelector("#estado").value = caso.idEstado;
+    document.querySelector("#test").innerHTML = caso.idEstado;
+</script>
+
+{% set  = 'it worked' %}
+
+{% endblock %}
+

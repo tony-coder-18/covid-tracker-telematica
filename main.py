@@ -239,9 +239,41 @@ def Visual():
 # END Modulo Visualización
 
 # Modulo Busqueda
-@app.route('/Gestionar')
+@app.route('/Gestionar',methods=['GET', 'POST'])
+@ayudante_is_logged_in
 def editar():
-    return render_template('Gestion.html')
+    results = []
+    if request.method == 'POST':
+        search = request.form['searchInput']
+        searchType = request.form['searchType']
+        print(searchType)
+        
+        if searchType == 'byName':
+            cur = mysql.connection.cursor()
+            results = cur.execute('SELECT * FROM `Registro de Caso` WHERE Nombres LIKE "%' + search + '%"')
+        elif searchType == 'byCodigo':
+            cur = mysql.connection.cursor()
+            results = cur.execute('SELECT * FROM `Registro de Caso` WHERE CodigoDeCaso = '+ search)
+        else:
+            cur = mysql.connection.cursor()
+            results = cur.execute('SELECT * FROM `Registro de Caso` WHERE Cedula = '+ search)
+
+        results = cur.fetchall()
+
+        mysql.connection.commit()
+
+    return render_template('Gestion.html', casos=results)
+
+
+# UPDATE `covidtelematica`.`Registro de Caso` SET `idEstado` = '1' WHERE (`CodigoDeCaso` = '6');
+@app.route('/editar_caso/<id>',methods=['GET', 'POST'])
+@ayudante_is_logged_in
+def getCaso(id):
+    cur = mysql.connection.cursor()
+    results = cur.execute('SELECT * FROM `Registro de Caso` WHERE CodigoDeCaso = '+id)
+    results = cur.fetchone()
+    return render_template('edit-caso.html', caso = results)
+
 # END Modulo Busqueda
 
 #Log in

@@ -8,9 +8,12 @@
         width: 80%;
             }
     </style>
+
     <section class="map">
          <div class="container-fluid text-center my-4" id ="mapid"></div>
      </section>
+
+
     <script>
         var map = L.map('map').setView([51.505, -0.09], 13);
 
@@ -24,7 +27,10 @@
         var marker = L.marker([51.5, -0.09]).addTo(map)
                 .bindPopup('Aqui es tu ubicación.<br> :v')
                 .openPopup();
+
     </script>
+
+
     <!-- Load mapa into de page. -->
     <!--<script src="static\images/mapa.js"></script>-->
     {% endblock %}

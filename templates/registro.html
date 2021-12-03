@@ -47,13 +47,36 @@
     </div>
     <div class="form-group">
       <label for="ResultadoExamen">Estado</label>
-      <select form="form" class="form-select" id="estado" name="estado">
-        <option selected value="1">Tratamiento en Casa</option>
-        <option value="2">Tratamiento en Hospital</option>
-        <option value="3">UCI</option>
-        <option value="4">Curado</option>
-        <option value="5">Muerto</option>
-      </select> 
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="estado" value="1" id="estado1">
+        <label class="form-check-label" for="estado1">
+            Tratamiento en Casa
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="estado" value="2" id="estado2" >
+        <label class="form-check-label" for="estado2">
+           Tratamiento en Hospital
+        </label>
+    </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="estado" value="3" id="estado3" >
+        <label class="form-check-label" for="estado3">
+            UCI
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="estado" value="4" id="estado4" >
+        <label class="form-check-label" for="estado4">
+            Curado
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="estado" value="5" id="estado5" >
+        <label class="form-check-label" for="estado5">
+            Muerto
+        </label>
+      </div>
     </div>
     <div class="form-group">
         <label for="start">Fecha examen:</label>

@@ -255,13 +255,30 @@ def editar():
         
         if searchType == 'byName':
             cur = mysql.connection.cursor()
-            results = cur.execute('SELECT * FROM `Registro de Caso` WHERE Nombres LIKE "%' + search + '%"')
+            results = cur.execute("""
+            SELECT ca.CodigoDeCaso, ca.Nombres, ca.Apellidos, ca.Cedula, ac.Estado
+            FROM `Registro de Caso` as ca, `Actualizar Datos` as ac
+            WHERE ca.Nombres LIKE "%"""+search+"""%" 
+            and ca.idEstado=ac.idEstado
+            """)
         elif searchType == 'byCodigo':
             cur = mysql.connection.cursor()
-            results = cur.execute('SELECT * FROM `Registro de Caso` WHERE CodigoDeCaso = '+ search)
+            # results = cur.execute('SELECT * FROM `Registro de Caso` WHERE CodigoDeCaso = '+ search)
+            results = cur.execute("""
+            SELECT ca.CodigoDeCaso, ca.Nombres, ca.Apellidos, ca.Cedula, ac.Estado
+            FROM `Registro de Caso` as ca, `Actualizar Datos` as ac
+            WHERE CodigoDeCaso = """+search+"""" 
+            and ca.idEstado=ac.idEstado
+            """)
         else:
             cur = mysql.connection.cursor()
-            results = cur.execute('SELECT * FROM `Registro de Caso` WHERE Cedula = '+ search)
+            # results = cur.execute('SELECT * FROM `Registro de Caso` WHERE Cedula = '+ search)
+            results = cur.execute("""
+            SELECT ca.CodigoDeCaso, ca.Nombres, ca.Apellidos, ca.Cedula, ac.Estado
+            FROM `Registro de Caso` as ca, `Actualizar Datos` as ac
+            WHERE Cedula = """+search+"""" 
+            and ca.idEstado=ac.idEstado
+            """)
 
         results = cur.fetchall()
 
@@ -301,6 +318,7 @@ def getCasoMedico(id):
     cur = mysql.connection.cursor()
     results = cur.execute('SELECT * FROM `Registro de Caso` WHERE CodigoDeCaso = '+id)
     results = cur.fetchone()
+    mysql.connection.commit()
     return render_template('edit-caso-medico.html', caso = results)
 
 # UPDATE `covidtelematica`.`Registro de Caso` SET `idEstado` = '1' WHERE (`CodigoDeCaso` = '6');
@@ -310,9 +328,39 @@ def getCaso(id):
     cur = mysql.connection.cursor()
     results = cur.execute('SELECT * FROM `Registro de Caso` WHERE CodigoDeCaso = '+id)
     results = cur.fetchone()
+    mysql.connection.commit()
     return render_template('edit-caso.html', caso = results)
 
+@app.route('/update_caso/<id>',methods=['GET', 'POST'])
+def updateCaso(id):
+    if request.method == 'POST':
+        estado = request.form.get('estado')
+        fecha = request.form.get('fecha')
+
+        cur = mysql.connection.cursor()
+        cur.execute("""
+            UPDATE `Registro de Caso` 
+            SET idEstado = %s 
+            WHERE CodigoDeCaso = %s
+        """,(estado,id))
+        cur.execute('INSERT INTO historicoCasos (idCaso,idEstado,fecha) VALUES(%s,%s,%s)',
+        (id,estado,fecha))
+        mysql.connection.commit()
+
+        flash("Caso Actualizado Satisfactoriamente")
+        return redirect(url_for('mainAyudante'))
+
 # END Modulo Busqueda
+@app.route('/historico_caso/<id>',methods=['GET', 'POST'])
+def historialCaso(id):
+    cur = mysql.connection.cursor()
+    cur = mysql.connection.cursor()
+            # results = cur.execute('SELECT * FROM `Registro de Caso` WHERE Cedula = '+ search)
+    results = cur.execute('SELECT his.fecha, ac.Estado FROM `Registro de Caso` as ca, historicoCasos as his, `Actualizar Datos` as ac WHERE his.idCaso = '+id+' and his.idEstado=ac.idEstado')
+    results = cur.fetchall()
+    mysql.connection.commit()
+    return render_template('historico-caso.html', historia=results)
+
 
 #Log in
 @app.route('/Login')

@@ -1,18 +1,18 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<form action="{{url_for('add_case')}}" method="POST" class="mb-4">
+<form action="/update_caso/{{caso.CodigoDeCaso}}" method="POST" class="mb-4" id="editForm" name="editForm">
     <div class="form-group">
       <label for="firstName">Nombre</label>
-      <input id="firstName" type="text" class="form-control" name="firstName" value="{{caso.Nombres}}">
+      <input id="firstName" type="text" class="form-control" name="firstName" value="{{caso.Nombres}}" disabled>
     </div>
     <div class="form-group">
       <label for="lastName">Apellido</label>
-      <input id="lastName" type="text" class="form-control" name="lastName" value="{{caso.Apellidos}}">
+      <input id="lastName" type="text" class="form-control" name="lastName" value="{{caso.Apellidos}}" disabled>
     </div>
     <div class="form-group">
         <label for="idNumber">Cédula</label>
-        <input id="idNumber" type="number" class="form-control" name="idNumber" value="{{caso.Cedula}}">
+        <input id="idNumber" type="number" class="form-control" name="idNumber" value="{{caso.Cedula}}" disabled>
     </div>
     <!-- <div class="form-group">
         <label for="Sexo">Sexo (F o M)</label>
@@ -30,11 +30,11 @@
     </div> -->
     <div class="form-group">
       <label for="adress">Direccion de residencia</label>
-      <input id="adress" type="text" class="form-control" name="Direccion de residencia" value="{{caso.DireccionDeResidencia}}">
+      <input id="adress" type="text" class="form-control" name="Direccion de residencia" value="{{caso.DireccionDeResidencia}}" disabled>
     </div>
     <div class="form-group">
       <label for="adress1">Direccion trabajo</label>
-      <input id="adress1" type="text" class="form-control" name="Direccion trabajo" value="{{caso.DireccionTrabajo}}">
+      <input id="adress1" type="text" class="form-control" name="Direccion trabajo" value="{{caso.DireccionTrabajo}}" disabled>
     </div>
     <!-- <div class="form-group">
         <label for="ResultadoExamen">Resultado Examen (Positivo o Negativo)</label>
@@ -43,17 +43,7 @@
           <option value="Negativo">Negativo</option>
         </select> 
     </div> -->
-    <div class="form-group">
-        <label for="start">Fecha examen:</label>
-        <input type="date" id="start1" name="Fecha examen"
-        value="{{caso.FechaExamen}}"
-        min="2020-01-01" max="2021-11-30">
-      </select> 
-    </div>
-
-    <label for="start">Fecha examen:</label>
-
-
+    <label for="estado">Cambie estado</label>
     <select class="form-select" id="estado" name="estado" >
         <option value="1">Tratamiento en Casa</option>
         <option value="2">Tratamiento en Hospital</option>
@@ -62,11 +52,16 @@
         <option value="5">Muerto</option>
     </select>
 
-    <a href="{{url_for('registroSuccess')}}">
+    <label for="fecha">Ingrese Fecha de Cambio de Estado</label>
+    <input type="date" name="fecha" id="fecha" required>
+
+    <br>
+
+    <button class="btn btn-secondary" type="submit" >
         Actualizar
-    </a>
+    </button>
     
-    <a href="{{url_for('PagiP')}}" class="btn btn-secondary btn-block">
+    <a href="#" class="btn btn-secondary btn-block">
         Volver al Login Inicial
     </a>
 

@@ -86,16 +86,16 @@
                 <td>{{caso.Nombres}}</td>
                 <td>{{caso.Apellidos}}</td>
                 <td>{{caso.Cedula}}</td>
-                <td>{{caso.idEstado}}</td>
+                <td>{{caso.Estado}}</td>
                 <td>
                     <div>
                         <!-- Button trigger modal -->
                         <a type="button" href="/editar_caso/{{caso.CodigoDeCaso}}" >
                         Actualizar Estado
                         </a>
-                        <button type="button">
+                        <a href="/historico_caso/{{caso.CodigoDeCaso}}" type="button">
                             Historial de Estados
-                        </button>
+                        </a>
                     </div>
                 </td>
             </tr>

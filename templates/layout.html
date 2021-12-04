@@ -17,25 +17,48 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="navbar navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <div class= "col-9"><a class="navbar-brand" href="/">COVID Tracker</a></div>
-        <div class= "col-1"><li><a href="/">Inicio</a></li></div>
-        <div class= "col-1"><li><a href="Visual">Graficas</a></li></div>
-        <div class= "col-1">
-          <div class="dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Login
-            </a>
-            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-              <li><a class="dropdown-item" href="{{url_for('loginAdmin')}}">Administrador</a></li>
-              <li><a class="dropdown-item" href="{{url_for('loginAyudante')}}">Ayudante</a></li>
-              <li><a class="dropdown-item" href="{{url_for('loginMedico')}}">Médico</a></li>
-              <li><a class="dropdown-item" href="{{url_for('logout')}}"></span>Cerrar Sesión</a></li> 
-            </ul>
-          </div>
-        </div>   
-    </div>
+        <a class="navbar-brand" href="/">COVID Tracker</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+            {% if session['ayudante_logged_in'] %}
+              <li class="nav-item"><a class="nav-link active" href="{{url_for('mainAyudante')}}">Menu principal ayudante</a></li>
+            {% endif%}
+
+            {% if session['medico_logged_in'] %}
+              <li class="nav-item"><a class="nav-link active" href="{{url_for('mainMedico')}}">Menu principal ayudante</a></li>
+            {% endif%}
+
+            <li class="nav-item"><a class="nav-link active" href="/">Inicio</a></li>
+
+            <li class="nav-item"><a class="nav-link active" href="Visual">Graficas</a></li>
+            
+              <li class="navbar-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Login
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                  <li><a class="dropdown-item" href="{{url_for('loginAdmin')}}">Administrador</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('loginAyudante')}}">Ayudante</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('loginMedico')}}">Médico</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('logout')}}"></span>Cerrar Sesión</a></li> 
+                </ul>
+              </li>
+
+          </ul>
+
+
+        </div>
+        
+    </div>   
+    
   </nav>
     {% with messages = get_flashed_messages(with_categories=true) %} 
       {% if messages %} 
